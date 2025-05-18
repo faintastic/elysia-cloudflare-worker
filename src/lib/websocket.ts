@@ -22,6 +22,9 @@ export const websocketHandler: WebSocketHandler<{ path: string }> = {
     const route = websocketRoutes.find(r => r.path === ws.data.path);
     if (route) {
       route.open(ws);
+    } else {
+      ws.send(`No route found for path: ${ws.data.path}, closing connection.`);
+      ws.close(1000, "No route found");
     }
   },
   close(ws: CustomWebSocket, code: number, reason: string) {
