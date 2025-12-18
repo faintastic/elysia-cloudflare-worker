@@ -4,6 +4,8 @@
 Cloudflare worker example with Elysia as the http router, and a custom implementation of WebSocket due to when Elysia config `aot` is `False`, WebSocket requests do not work, `aot` needs to be `disabled` to work in the cloudflare worker environment.
 - https://github.com/elysiajs/elysia/issues/1215
 
+**This issue was fixed in newer version of elysia making this fix "useless", it is still here if you wish to use it.**
+
 
 ## Authors
 
