@@ -1,4 +1,3 @@
-
 /**
  * Respond with a JSON object.
  * @param status - The HTTP status code.

@@ -3,7 +3,7 @@ import type { ChalkInstance } from "chalk";
 
 type LogTypes = "info" | "warn" | "error" | "fatal";
 
-export default class logger {
+export default class log {
   /**
    * Get the current timestamp (MM-DD-YY HH:MM:SS)
    */
@@ -25,10 +25,10 @@ export default class logger {
    */
   private static getLevelStyles(level: LogTypes): { label: string; style: ChalkInstance; messageStyle?: ChalkInstance } {
     const styles: Record<LogTypes, { label: string; style: ChalkInstance; messageStyle?: ChalkInstance }> = {
-      info: { label: "[INFO]", style: chalk.blue },
-      warn: { label: "[WARN]", style: chalk.yellow },
-      error: { label: "[ERROR]", style: chalk.red },
-      fatal: { label: "[FATAL]", style: chalk.red.bold.bgBlack, messageStyle: chalk.white.bold.bgRed },
+      info: { label: "INFO", style: chalk.blue },
+      warn: { label: "WARN", style: chalk.yellow },
+      error: { label: "ERROR", style: chalk.red },
+      fatal: { label: "FATAL", style: chalk.red.bold.bgBlack, messageStyle: chalk.white.bold.bgRed },
     };
 
     return styles[level];

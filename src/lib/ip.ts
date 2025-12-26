@@ -1,15 +1,26 @@
-export function getIP(headers: any): string {
-  let ip: string;
 
-  if (headers.get("cf-connecting-ip")) {
-    ip = headers.get("cf-connecting-ip");
-  } else if (headers.get("x-forwarded-for")) {
-    ip = headers.get("x-forwarded-for");
-  } else if (headers.get("x-real-ip")) {
-    ip = headers.get("x-real-ip");
-  } else {
-    ip = "127.0.0.1"
+/**
+ * Responds with the client's IP address based on request headers.
+ * @param headers - Request headers
+ * @returns IP address as string
+ */
+export function getIP(headers: Headers): string {
+  const cfConnectingIp = headers.get("cf-connecting-ip");
+  if (cfConnectingIp) {
+    return cfConnectingIp;
   }
 
-  return ip;
+  const xForwardedFor = headers.get("x-forwarded-for");
+  if (xForwardedFor) {
+    // x-forwarded-for can contain multiple IPs, take the first one
+    const firstIp = xForwardedFor.split(',')[0];
+    return firstIp ? firstIp.trim() : "127.0.0.1";
+  }
+
+  const xRealIp = headers.get("x-real-ip");
+  if (xRealIp) {
+    return xRealIp;
+  }
+
+  return "127.0.0.1";
 }
