@@ -1,6 +1,6 @@
-# Cloudflare-Elysia
+# Elysia Cloudflare Worker
 
-A high-performance web server built with [Elysia](https://elysiajs.com/) and optimized for deployment on Cloudflare Workers, with full WebSocket support for both development and production environments.
+A high-performance web server built with [Elysia](https://elysiajs.com/) and optimized for deployment on Cloudflare Workers, with full WebSocket support for both development and production environments (custom implementation).
 
 ## Features
 
