@@ -1,32 +1,22 @@
 {
-  "name": "discord-interactions",
-  "version": "1.0.0",
-  "description": "A modern Discord bot framework built with Elysia and TypeScript for Cloudflare Workers",
+  "name": "cloudflare-elysia",
   "module": "src/index.ts",
   "type": "module",
-  "license": "MIT",
-  "author": "Faint",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251224.0",
-    "@types/bun": "^1.3.6"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
     "chalk": "^5.6.2",
-    "discord-api-types": "^0.38.37",
     "elysia": "^1.4.19",
-    "tweetnacl": "^1.0.3",
-    "vite": "^7.3.0",
-    "wrangler": "^4.59.2"
+    "wrangler": "^4.54.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "generate-manifest": "bun run scripts/generate-manifest.ts",
-    "predeploy": "bun run generate-manifest",
-    "deploy": "bun run generate-manifest && wrangler deploy --minify src/index.ts",
-    "deploy:check": "echo '⚠️  Before deploying: Make sure all new handlers are added to src/lib/discord/manifest.ts' && echo 'See DEPLOYMENT.md for details' && wrangler deploy --minify src/index.ts"
+    "deploy": "wrangler deploy --minify src/index.ts"
   }
 }

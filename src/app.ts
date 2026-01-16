@@ -10,68 +10,58 @@ import log from "./lib/log";
 import { getIP } from "./lib/ip";
 import { createHash } from "crypto";
 import { respond } from "./lib/respond";
+import type { CustomWebSocket, WebSocketRoute } from "./lib/ws";
 
 import mainController from "./routes/main";
 
-// Discord Interactions Mapping
-// Ideally you would connect this to a database, but this is just an example.
-export const customBots = {
-  "": {
-    clientId: "",
-    botToken: "",
-    botSecret: "",
-    publicKey: ""
-  },
-
-  "": {
-    clientId: "",
-    botToken: "",
-    botSecret: "",
-    publicKey: ""
-  }
-} as const
-
-export type CustomBot = (typeof customBots)[keyof typeof customBots];
-
 // NOTE: "aot" must be disabled in order to be hosted on cloudflare as a worker
 // https://elysiajs.com/at-glance.html
-export const app = new Elysia({ 
-  aot: false,
-  normalize: false
-})
+export const app = new Elysia({ aot: false })
   .onError(({ code, error }: any) => {
     return respond(error.status, {
       message: "An error has occurred while requesting",
       code: `${error.status} (${code})`,
     });
   })
-  .onRequest(async ({ request }) => {
+  .onRequest(({ request }) => {
     const ipAddress = getIP(request.headers);
+    // Hash IP address for clients privacy
     const hashedIpAddress = createHash("sha1").update(ipAddress).digest("hex");
 
-    let showArea: string = "";
-    if (request.method === "POST" && request.url.endsWith("/interaction")) {
-      try {
-        const body = await request.clone().text();
-        const interaction = JSON.parse(body);
-        
-        if (interaction.type === 2) {
-          showArea = "command";
-        } else if (interaction.type === 3) {
-          if (interaction.data?.component_type === 2) {
-            showArea = "button";
-          } else {
-            showArea = "select menu";
-          }
-        } else if (interaction.type === 5) {
-          showArea = "modal";
-        }
-      } catch {
-        showArea = "command";
-      }
-    }
-
-    log.info(`${request.method} -> ${request.url} from ${hashedIpAddress}`, showArea);
+    log.info(`${request.method} -> ${request.url} from ${hashedIpAddress}`);
   })
 
   .use(mainController);
+
+export const websocketRoutes: WebSocketRoute[] = [
+  {
+    path: "/ws",
+    message(ws: CustomWebSocket, message: string | Buffer) {
+      if (!message || (typeof message === 'string' && message.length === 0)) {
+        ws.send("Error: Empty message received");
+        return;
+      }
+      ws.send(`Non-Elysia WS echo: ${message}`);
+    },
+    open(ws: CustomWebSocket) {
+      ws.send("Welcome to the non-Elysia WebSocket server!");
+    },
+    close(_ws: CustomWebSocket, _code: number, _reason: string) {
+    },
+  },
+  {
+    path: "/ws2",
+    message(ws: CustomWebSocket, message: string | Buffer) {
+      if (!message || (typeof message === 'string' && message.length === 0)) {
+        ws.send("Error: Empty message received");
+        return;
+      }
+      ws.send(`Non-Elysia WS2 echo: ${message}`);
+    },
+    open(ws: CustomWebSocket) {
+      ws.send("Welcome to the non-Elysia WebSocket server 2!");
+    },
+    close(_ws: CustomWebSocket, _code: number, _reason: string) {
+    },
+  },
+];
