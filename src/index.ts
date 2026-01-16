@@ -3,13 +3,13 @@
 */
 
 import { CustomWebsocketHandler } from "./lib/ws";
-import { app, websocketRoutes } from "./app";
+import { app } from "./app";
 import type { WebSocketRoute } from "./lib/ws";
 
 const routeCache = new Map<string, WebSocketRoute>();
-websocketRoutes.forEach(route => routeCache.set(route.path, route));
+// websocketRoutes.forEach(route => routeCache.set(route.path, route));
 
-const websocketHandler = new CustomWebsocketHandler({ routes: websocketRoutes });
+const websocketHandler = new CustomWebsocketHandler({ routes: [] });
 
 export default {
   async fetch(
