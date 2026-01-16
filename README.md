@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # Discord Interactions
 
 A modern Discord bot framework built with [Elysia](https://elysiajs.com/) and TypeScript, designed to run on Cloudflare Workers with local development powered by Bun.
+=======
+# Elysia Cloudflare Worker
+
+A high-performance web server built with [Elysia](https://elysiajs.com/) and optimized for deployment on Cloudflare Workers, with full WebSocket support for both development and production environments (custom implementation).
+>>>>>>> 26f1c77cd7337c25ff1a0b73bf1abe6016cb5524
 
 ## Features
 
@@ -365,9 +371,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
+<<<<<<< HEAD
 - 📖 Check the [scripts/README.md](scripts/README.md) for tooling documentation
 - 🐛 Report issues on GitHub
 
 ---
 
 Built with ❤️ using Elysia, TypeScript, and Cloudflare Workers
+=======
+- [Elysia](https://elysiajs.com/) - Fast and ergonomic web framework
+- [Bun](https://bun.sh/) - Fast JavaScript runtime
+- [Cloudflare Workers](https://workers.cloudflare.com/) - Serverless execution environment
+>>>>>>> 26f1c77cd7337c25ff1a0b73bf1abe6016cb5524
